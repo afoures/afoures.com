@@ -1,0 +1,41 @@
+{
+  "name": "afoures.com",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "dev": "react-router dev",
+    "typegen": "react-router typegen && wrangler types",
+    "typecheck": "pnpm run typegen && tsc -b",
+    "build": "react-router build",
+    "deploy": "pnpm run build && NODE_ENV=production wrangler deploy",
+    "deploy:version": "pnpm run build && wrangler versions upload",
+    "deploy:promote": "wrangler versions deploy",
+    "db:drop": "drizzle-kit drop",
+    "db:generate": "drizzle-kit generate",
+    "db:apply": "wrangler d1 migrations apply DB --local"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.43.1",
+    "isbot": "^5.1.27",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router": "^7.6.0"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.1.1",
+    "@react-router/dev": "^7.6.0",
+    "@tailwindcss/vite": "^4.1.6",
+    "@types/node": "^22.15.17",
+    "@types/react": "^19.1.3",
+    "@types/react-dom": "^19.1.3",
+    "drizzle-kit": "^0.31.1",
+    "tailwindcss": "^4.1.6",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vite-tsconfig-paths": "^5.1.4",
+    "wrangler": "^4.14.4"
+  },
+  "packageManager": "pnpm@10.10.0"
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "afoures-com",
+  "compatibility_date": "2025-04-04",
+  "main": "./app/entry.worker.ts",
+  "compatibility_flags": [
+    "nodejs_compat",
+    "nodejs_compat_populate_process_env"
+  ],
+  "observability": {
+    "enabled": true
+  },
+  "vars": {},
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "website-content",
+      "database_id": "a7e7268d-31cf-4fec-aa09-a4ad377a968e"
+    }
+  ]
+}
