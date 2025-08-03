@@ -1,5 +1,17 @@
+packages:
+  - cli
+
+catalog:
+  typescript: "^5.8.3"
+  '@types/node': "^22.15.17"
+  '@libsql/client': "^0.15.6"
+  arktype: "^2.1.20"
+  drizzle-orm: "^0.43.1"
+  mdx-bundler: "^10.1.1"
+
 onlyBuiltDependencies:
   - '@tailwindcss/oxide'
   - esbuild
   - sharp
   - workerd
+  - better-sqlite3

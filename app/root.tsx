@@ -1,5 +1,6 @@
 import {
   isRouteErrorResponse,
+  Link,
   Links,
   Meta,
   Outlet,
@@ -9,6 +10,7 @@ import {
 
 import type { Route } from "./+types/root";
 import stylesheet from "./stylesheet.css?url";
+import { Heading, Region } from "./components/ui/region";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -19,12 +21,9 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap",
   },
-  {
-    rel: "stylesheet",
-    href: stylesheet,
-  },
+  { rel: "stylesheet", href: stylesheet },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -36,7 +35,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="mx-auto max-w-prose px-8 py-24 leading-relaxed md:text-lg flex gap-20 flex-col">
+        <nav className="flex justify-between">
+          <div>
+            <Link to="/" aria-label="Homepage" className="text-2xl">
+              🌱
+            </Link>
+          </div>
+          {/* <div>
+              <Link to="/rss" className="underline">
+                RSS
+              </Link>
+            </div> */}
+        </nav>
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -66,14 +77,14 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
+    <Region as="main" className="pt-16 p-4 container mx-auto">
+      <Heading>{message}</Heading>
       <p>{details}</p>
       {stack && (
         <pre className="w-full p-4 overflow-x-auto">
           <code>{stack}</code>
         </pre>
       )}
-    </main>
+    </Region>
   );
 }

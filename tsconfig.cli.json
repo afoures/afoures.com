@@ -1,0 +1,16 @@
+{
+  "include": ["cli/**/*"],
+  "compilerOptions": {
+    "strict": true,
+    "noEmit": true,
+    "checkJs": true,
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true,
+    "skipLibCheck": true,
+    "types": ["node", "@types/unist"],
+    "lib": ["ES2022"],
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "bundler"
+  }
+}
