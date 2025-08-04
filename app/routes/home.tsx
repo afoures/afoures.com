@@ -1,7 +1,7 @@
 import type { Route } from "./+types/home";
 import { Timeline } from "~/components/timeline";
 import * as ctx from "~/context";
-import { Heading, Region } from "~/components/ui/region";
+import { Region } from "~/components/ui/semantic";
 import { find_published_content } from "~/use-cases/find-published-content";
 
 export async function loader({ context }: Route.LoaderArgs) {
@@ -17,9 +17,9 @@ export default function Home({
   loaderData: { timeline },
 }: Route.ComponentProps) {
   return (
-    <Region as="main">
-      <Heading className="sr-only">Homepage</Heading>
+    <Region.Root element="main">
+      <Region.Heading className="sr-only">Homepage</Region.Heading>
       <Timeline timeline={timeline} />
-    </Region>
+    </Region.Root>
   );
 }

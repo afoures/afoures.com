@@ -10,7 +10,7 @@ import {
 
 import type { Route } from "./+types/root";
 import stylesheet from "./stylesheet.css?url";
-import { Heading, Region } from "./components/ui/region";
+import { Region } from "./components/ui/semantic";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -35,7 +35,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="mx-auto max-w-prose px-8 py-24 leading-relaxed md:text-lg flex gap-20 flex-col">
+      <body className="mx-auto max-w-prose px-8 py-24 leading-relaxed text-lg flex gap-20 flex-col">
         <nav className="flex justify-between">
           <div>
             <Link to="/" aria-label="Homepage" className="text-2xl">
@@ -77,14 +77,14 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <Region as="main" className="pt-16 p-4 container mx-auto">
-      <Heading>{message}</Heading>
+    <Region.Root element="main" className="pt-16 p-4 container mx-auto">
+      <Region.Heading>{message}</Region.Heading>
       <p>{details}</p>
       {stack && (
         <pre className="w-full p-4 overflow-x-auto">
           <code>{stack}</code>
         </pre>
       )}
-    </Region>
+    </Region.Root>
   );
 }

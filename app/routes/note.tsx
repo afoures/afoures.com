@@ -2,7 +2,7 @@ import { get_note } from "~/use-cases/get-note";
 import type { Route } from "./+types/note";
 import * as ctx from "~/context";
 import { useState, type ReactNode } from "react";
-import { Heading, Region } from "~/components/ui/region";
+import { Region } from "~/components/ui/semantic";
 import { format } from "date-fns";
 import { Link } from "react-router";
 import { unified } from "unified";
@@ -27,8 +27,8 @@ export default function Note({ loaderData: { note } }: Route.ComponentProps) {
       .use(rehype_react, {
         ...react_jsx_runtime,
         components: {
-          region: Region,
-          heading: Heading,
+          region: Region.Root,
+          heading: Region.Heading,
         },
       })
       .processSync(note.html);
@@ -36,9 +36,9 @@ export default function Note({ loaderData: { note } }: Route.ComponentProps) {
   });
 
   return (
-    <Region as="main" region_id={note.slug}>
-      <div className="flex items-baseline gap-6 mb-20">
-        <Link to="/" aria-label="Go back">
+    <Region.Root element="main" region_id={note.slug}>
+      <div className="flex flex-col sm:flex-row items-baseline gap-2 sm:gap-6 mb-20">
+        <Link to="/" aria-label="Go back" className="mb-6 sm:mb-0">
           <svg
             width="22"
             height="22"
@@ -57,10 +57,10 @@ export default function Note({ loaderData: { note } }: Route.ComponentProps) {
             ></path>
           </svg>
         </Link>
-        <Heading className="text-4xl">{note.title}</Heading>
+        <Region.Heading className="text-4xl">{note.title}</Region.Heading>
         <time
           dateTime={note.published_at.toISOString()}
-          className="ml-auto italic text-slate-500"
+          className="sm:ml-auto italic text-slate-500"
         >
           {format(note.published_at, "yyyy-MM-dd")}
         </time>
@@ -68,6 +68,6 @@ export default function Note({ loaderData: { note } }: Route.ComponentProps) {
       <article className="prose prose-lg prose-slate prose-headings:font-normal prose-blockquote:font-normal">
         {content}
       </article>
-    </Region>
+    </Region.Root>
   );
 }

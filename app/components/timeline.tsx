@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { format } from "date-fns";
-import { Heading, Region } from "./ui/region";
+import { Region } from "./ui/semantic";
 
 export interface TimelineProps {
   timeline: {
@@ -22,23 +22,24 @@ export function Timeline({ timeline }: TimelineProps) {
   return (
     <div className="flex flex-col gap-20">
       {timeline.map(({ year, months }) => (
-        <Region
-          as="section"
+        <Region.Root
           key={year.toISOString()}
+          element="section"
           region_id={format(year, "yyyy")}
         >
-          <Heading className="text-slate-500 text-2xl mb-4">
+          <Region.Heading className="text-slate-500 text-2xl mb-4">
             {format(year, "yyyy")}
-          </Heading>
+          </Region.Heading>
           <div className="flex flex-col gap-8">
             {months.map(({ month, entries }) => (
-              <Region
+              <Region.Root
                 key={month.toISOString()}
+                element="section"
                 region_id={format(month, "MMMM-yyyy").toLowerCase()}
               >
-                <Heading className="ml-auto w-fit text-lg text-slate-500 mb-2">
+                <Region.Heading className="ml-auto w-fit text-lg text-slate-500 mb-2">
                   {format(month, "MMMM")}
-                </Heading>
+                </Region.Heading>
                 <div className="flex flex-col gap-2">
                   {entries.map((entry) => (
                     <div
@@ -55,10 +56,10 @@ export function Timeline({ timeline }: TimelineProps) {
                     </div>
                   ))}
                 </div>
-              </Region>
+              </Region.Root>
             ))}
           </div>
-        </Region>
+        </Region.Root>
       ))}
     </div>
   );

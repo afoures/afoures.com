@@ -6,37 +6,40 @@ import {
   type ComponentPropsWithoutRef,
 } from "react";
 
-const HeadingIdContext = createContext<string | undefined>(undefined);
+const RegionIdContext = createContext<string | undefined>(undefined);
 const HeadingLevelContext = createContext<number>(0);
 
-export function Region<
-  As extends "div" | "main" | "section" | "article" | "aside" = "div"
->({
-  region_id,
-  as: as,
+type AvailableRegionElement = "div" | "main" | "section" | "article" | "aside";
+
+type RootProps<RegionElement extends AvailableRegionElement> =
+  ComponentPropsWithoutRef<NoInfer<RegionElement>> & {
+    region_id?: string;
+    element?: RegionElement;
+  };
+
+export function Root<RegionElement extends AvailableRegionElement = "div">({
+  region_id: custom_region_id,
+  element: custom_element,
   ...props
-}: ComponentPropsWithoutRef<NoInfer<As>> & {
-  region_id?: string;
-  as?: As;
-}) {
+}: RootProps<RegionElement>) {
   const internal_id = useId();
-  const heading_id = region_id ?? `region-${internal_id}`;
+  const region_id = custom_region_id ?? `region-${internal_id}`;
 
   const heading_level = useContext(HeadingLevelContext);
   const next_level = heading_level + 1;
 
-  const element = as ?? "div";
+  const element = custom_element ?? "div";
 
   return (
-    <HeadingIdContext.Provider value={heading_id}>
+    <RegionIdContext.Provider value={region_id}>
       <HeadingLevelContext.Provider value={next_level}>
         {createElement(element, {
           ...props,
           role: element === "div" ? "region" : undefined,
-          "aria-labelledby": heading_id,
+          "aria-labelledby": region_id,
         })}
       </HeadingLevelContext.Provider>
-    </HeadingIdContext.Provider>
+    </RegionIdContext.Provider>
   );
 }
 
@@ -45,7 +48,7 @@ export type HeadingProps = React.HTMLAttributes<HTMLHeadingElement> & {
 };
 
 export function Heading({ level = "auto", ...props }: HeadingProps) {
-  const id = useContext(HeadingIdContext);
+  const id = useContext(RegionIdContext);
   const heading_level = useContext(HeadingLevelContext);
 
   if (id !== undefined && props.id !== undefined && id !== props.id) {
